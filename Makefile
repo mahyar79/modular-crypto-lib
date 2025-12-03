@@ -3,7 +3,7 @@ CFLAGS  = -std=c99 -Wall -Wextra -O2 -Iinclude
 
 SRC     = $(wildcard src/*.c)
 OBJ     = $(SRC:.c=.o)
-TARGET  = test_runner
+TARGET  = crypto_utils
 
 all: $(TARGET)
 
