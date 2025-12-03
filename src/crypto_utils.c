@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "crypto_utils.h"
+#include <stdint.h>
 
 void xor_buffers(unsigned char *result,
     const unsigned char *a, const unsigned char *b, int len){
@@ -8,4 +9,18 @@ void xor_buffers(unsigned char *result,
     }
 int main (){
     return 1;
+}
+
+uint32_t byte_swap_32(uint32_t val){
+    uint32_t result = 0;
+
+        result |= ( (val & 0xFF) << 24 );
+
+        result |= ( (val >> 8) & 0xFF) << 16 ;
+
+        result |= ( (val >> 16) & 0xFF) << 8 ;
+
+        result |= (val >> 24) & 0xFF ;
+
+        return result;
 }

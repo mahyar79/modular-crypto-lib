@@ -1,3 +1,4 @@
+#include <stdint.h>
 #ifndef CRYPTO_UTILS_H
 #define CRYPTO_UTILS_H
 
@@ -6,6 +7,5 @@ void xor_buffers(unsigned char *result,
                  const unsigned char *b,
                  int len);
 
-
-// void byte_to_hex(unsigned char byte);
+uint32_t byte_swap_32(uint32_t val);
 #endif
