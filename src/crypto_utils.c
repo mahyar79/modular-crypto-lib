@@ -16,11 +16,14 @@ uint32_t byte_swap_32(uint32_t val){
 
         result |= ( (val & 0xFF) << 24 );
 
-        result |= ( (val >> 8) & 0xFF) << 16 ;
+        result |= ( (val >> 8) & 0xFF) << 16;
+        //Original val: 10101010 10111011 11001100 11011101 (AA BB CC DD)
+       // After >> 8:  00000000 10101010 10111011 11001100 (00 AA BB CC) ← DD is gone, AA/BB/CC shifted down.
+        //result |= this: Current result (0xDD000000) OR 0x00CC0000 → 0xDDCC0000.
 
-        result |= ( (val >> 16) & 0xFF) << 8 ;
+        result |= ( (val >> 16) & 0xFF) << 8;
 
-        result |= (val >> 24) & 0xFF ;
+        result |= (val >> 24) & 0xFF;
 
         return result;
 }
