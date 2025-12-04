@@ -11,3 +11,10 @@ int bn_init(bn_t *bn,uint32_t capacity){
     bn -> capacity = capacity;
     return 0;
 }
+
+void bn_free(bn_t *n){
+    free(n -> digits);
+    n-> digits = NULL;
+    n-> len = 0;
+    n -> capacity = 0;
+}

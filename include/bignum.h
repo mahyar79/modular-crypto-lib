@@ -10,4 +10,6 @@ typedef struct  {
 }   bn_t;
 
 int bn_init(bn_t *bn,uint32_t capacity);
+
+void bn_free(bn_t *n);
 #endif
