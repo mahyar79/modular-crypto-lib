@@ -1,4 +1,5 @@
 #include "bignum.h"
+#include <cstdint>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -17,4 +18,29 @@ void bn_free(bn_t *n){
     n-> digits = NULL;
     n-> len = 0;
     n -> capacity = 0;
+}
+
+int bn_add(bn_t *r, const bn_t *a, const bn_t *b){
+    uint32_t len = a -> len ;
+    uint32_t carry = 0;
+
+
+    if (r-> capacity < len +1)
+        return -1;
+
+    for (int i = 0; i < len; i++){
+
+        uint64_t temp_sum = (uint64_t) a -> digits[i] + b -> digits[i] + carry;
+        uint32_t result_word = (uint32_t) temp_sum;
+        carry = temp_sum >> 32;
+        r -> digits[i] = result_word;
+
+    }
+    r-> len = len;
+    if (carry != 0){
+        r-> digits[len] = carry;
+        r-> len++;
+    }
+
+    return 0;
 }
