@@ -41,3 +41,22 @@ int bn_add(bn_t *r, const bn_t *a, const bn_t *b){
     }
     return 0;
 }
+
+int bn_sub(bn_t *r, const bn_t *a, const bn_t *b){
+    size_t len = a -> len; // For simplicity, assume A≥B and A.len=B.len=R.capacity
+    uint32_t borrow = 0;
+    // for now assume r-> capacity is sufficient.
+    for (size_t i = 0; i< len; i++){
+        uint32_t sub_amount = b-> digits[i] + borrow;
+        if(a -> digits[i] < sub_amount){
+            // borrow is needed here
+            r-> digits[i] = a-> digits[i] - sub_amount;  // c's unsigned math handles the wrap
+            borrow = 1;
+        }
+        else{
+            r -> digits[i] = a -> digits[i] - sub_amount;
+            borrow = 0;
+        }
+    }
+    return borrow;
+}
