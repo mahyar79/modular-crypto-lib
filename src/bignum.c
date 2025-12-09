@@ -60,3 +60,25 @@ int bn_sub(bn_t *r, const bn_t *a, const bn_t *b){
     }
     return borrow;
 }
+
+int bn_mul(bn_t *r, const bn_t *a, const bn_t *b){
+    if (r-> capacity < a-> len + b-> len)
+        return -1;
+
+    r-> len = 0;
+    for (size_t i = 0; i< a-> len; i++){
+        uint32_t carry =0;
+
+        for (size_t j = 0; j < b-> len; j++){
+            uint64_t temp_sum = (uint64_t) a-> digits[i] * b-> digits[j] + carry + r-> digits[i+j];
+            r-> digits[i+j] = (uint32_t) temp_sum;
+            carry = temp_sum >> 32;
+    }
+        r-> digits[i + b-> len] = carry;
+    }
+    r-> len = a-> len + b-> len;
+    while(r-> len > 1 && r-> digits[r-> len - 1] ==0){
+        r-> len--;
+    }
+    return 0;
+}
