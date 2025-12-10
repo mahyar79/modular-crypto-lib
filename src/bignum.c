@@ -89,9 +89,17 @@ int bn_copy(bn_t *dest, const bn_t *src){
     if (dest-> capacity < src -> len)
         return -1;
 
-    src -> len = dest -> len;
+    dest -> len = src -> len;
     memcpy(dest-> digits, src-> digits, src-> len * sizeof(uint32_t));
     return 0;
+}
+uint32_t bn_get_bit(const bn_t *a, size_t index){
+   size_t w_idx = index / 32;
+   size_t b_pos = index %32;
+   if ( index > (32 * a-> len) -1)
+       return 0;
+
+   return (a -> digits[w_idx] >> b_pos) & 1;
 }
 
 int bn_mod_exp(bn_t *r, const bn_t *a, const bn_t *e, const bn_t *n) {

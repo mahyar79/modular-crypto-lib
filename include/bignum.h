@@ -16,5 +16,6 @@ int bn_add(bn_t *r, const bn_t *a, const bn_t *b);
 int bn_sub(bn_t *r, const bn_t *a, const bn_t *b);
 int bn_mul(bn_t *r, const bn_t *a, const bn_t *b);
 int bn_copy(bn_t *dest, const bn_t *src);
+uint32_t bn_get_bit(const bn_t *a, size_t index);
 int bn_mod_exp(bn_t *r, const bn_t *a, const bn_t *e, const bn_t *n);
 #endif
