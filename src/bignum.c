@@ -1,8 +1,10 @@
 #include "bignum.h"
+#include <cstdint>
 #include <stdio.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 
 int bn_init(bn_t *bn,uint32_t capacity){
     bn -> digits = malloc(capacity * sizeof(uint32_t));
@@ -83,18 +85,27 @@ int bn_mul(bn_t *r, const bn_t *a, const bn_t *b){
     return 0;
 }
 
+int bn_copy(bn_t *dest, const bn_t *src){
+    if (dest-> capacity < src -> len)
+        return -1;
+
+    src -> len = dest -> len;
+    memcpy(dest-> digits, src-> digits, src-> len * sizeof(uint32_t));
+    return 0;
+}
+
 int bn_mod_exp(bn_t *r, const bn_t *a, const bn_t *e, const bn_t *n) {
 
     bn_copy(base, a);
 
     for (int i = max_bit; i >= 0; i--) {
 
-        bn_mul(r, r, r); 
-        bn_mod(r, n);    
+        bn_mul(r, r, r);
+        bn_mod(r, n);
 
-      
+
         if (bn_get_bit(e, i) == 1) {
-            
+
             bn_mul(temp, r, base);
             bn_mod(temp, n);
             bn_copy(r, temp);
