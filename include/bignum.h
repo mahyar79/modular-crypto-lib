@@ -1,5 +1,6 @@
 #ifndef BIGNUM_H
 #define BIGNUM_H
+#include <cstdint>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -8,6 +9,12 @@ typedef struct  {
     size_t len;
     uint32_t capacity;
 }   bn_t;
+
+typedef struct {
+    bn_t n; // modulus
+    uint32_t n_inv; // Modular inverse: n' = -n^{-1} (mod 2^32)
+    bn_t rr;   // R^2 mod n (used to convert into Montgomery domain)
+} bn_ctx_t;
 
 int bn_init(bn_t *bn,uint32_t capacity);
 
