@@ -14,7 +14,7 @@ typedef struct {
     bn_t N; // modulus
     uint32_t n_inv; // Modular inverse: n' = -n^{-1} (mod 2^32)
     bn_t RR;   // R^2 mod n (used to convert into Montgomery domain)
-} bn_ctx_t;
+} bn_mont_ctx_t;
 
 int bn_init(bn_t *bn,uint32_t capacity);
 

@@ -130,22 +130,10 @@ int bn_cmp(const bn_t *a, const bn_t *b){
 
 int bn_mod_exp(bn_t *r, const bn_t *a, const bn_t *e, const bn_t *n) {
 
-    bn_copy(base, a);
+    bn_mont_ctx_t ctx;
+    bn_init(&ctx.N, n-> len);
+    bn_copy(&ctx.N, n);
 
-    for (int i = max_bit; i >= 0; i--) {
-
-        bn_mul(r, r, r);
-        bn_mod(r, n);
-
-
-        if (bn_get_bit(e, i) == 1) {
-
-            bn_mul(temp, r, base);
-            bn_mod(temp, n);
-            bn_copy(r, temp);
-        }
-    }
-    return 0;
 }
 
 // bn_add: require a->len == b->len for now.
